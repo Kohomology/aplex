@@ -1,37 +1,37 @@
 pragma solidity ^0.4.18;
 
-contract Ownable { // Ownable - вспомогательный класс для проверки на то, что метод вызван владельцем данного контракта (т.е. тем пользователем, который этот контракт запустил)
-    
-    address public owner; // Здесь храним адрес владельца
-    
-    constructor() public { // Конструктор - делаем владельцем того, кто создал контракт
+contract Ownable { // Ownable - РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Р№ РєР»Р°СЃСЃ РґР»СЏ РїСЂРѕРІРµСЂРєРё РЅР° С‚Рѕ, С‡С‚Рѕ РјРµС‚РѕРґ РІС‹Р·РІР°РЅ РІР»Р°РґРµР»СЊС†РµРј РґР°РЅРЅРѕРіРѕ РєРѕРЅС‚СЂР°РєС‚Р° (С‚.Рµ. С‚РµРј РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј, РєРѕС‚РѕСЂС‹Р№ СЌС‚РѕС‚ РєРѕРЅС‚СЂР°РєС‚ Р·Р°РїСѓСЃС‚РёР»)
+
+    address public owner; // Р—РґРµСЃСЊ С…СЂР°РЅРёРј Р°РґСЂРµСЃ РІР»Р°РґРµР»СЊС†Р°
+
+    constructor() public { // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ - РґРµР»Р°РµРј РІР»Р°РґРµР»СЊС†РµРј С‚РѕРіРѕ, РєС‚Рѕ СЃРѕР·РґР°Р» РєРѕРЅС‚СЂР°РєС‚
         owner = msg.sender;
     }
-
-    modifier onlyOwner() { // Проверка на то, что только владелец может вызывать функцию (к которой применен этот модификатор)
-        require(msg.sender == owner);
-        _;
+    
+    modifier onlyOwner() { // РџСЂРѕРІРµСЂРєР° РЅР° С‚Рѕ, С‡С‚Рѕ С‚РѕР»СЊРєРѕ РІР»Р°РґРµР»РµС† РјРѕР¶РµС‚ РІС‹Р·С‹РІР°С‚СЊ С„СѓРЅРєС†РёСЋ (Рє РєРѕС‚РѕСЂРѕР№ РїСЂРёРјРµРЅРµРЅ СЌС‚РѕС‚ РјРѕРґРёС„РёРєР°С‚РѕСЂ)
+    require(msg.sender == owner);
+    _;
     }
 
-    function transferOwnership(address newOwner) public onlyOwner { // Смена владельца контракта
+    function transferOwnership(address newOwner) public onlyOwner { // РЎРјРµРЅР° РІР»Р°РґРµР»СЊС†Р° РєРѕРЅС‚СЂР°РєС‚Р°
         owner = newOwner;
     }
-    
+
 }
 
 
 
-contract AplexCoin is Ownable { // Код контракта (класса) владения монетами пользователями системы
-   
-    mapping (address => uint256) balances; // таблица балансов
-    uint256 public totalSupply; // сколько токенов выпущено
-    uint256 public constant decimal = 18; // количество знаков после запятой (чтобы не писать 10^18, когда мы выпускаем лишь один токен)
-   
-    constructor() public { // Конструктор
-       
+contract AplexCoin is Ownable { // РљРѕРґ РєРѕРЅС‚СЂР°РєС‚Р° (РєР»Р°СЃСЃР°) РІР»Р°РґРµРЅРёСЏ РјРѕРЅРµС‚Р°РјРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРјРё СЃРёСЃС‚РµРјС‹
+
+    mapping (address => uint256) balances; // С‚Р°Р±Р»РёС†Р° Р±Р°Р»Р°РЅСЃРѕРІ
+    uint256 public totalSupply; // СЃРєРѕР»СЊРєРѕ С‚РѕРєРµРЅРѕРІ РІС‹РїСѓС‰РµРЅРѕ
+    uint256 public constant decimal = 18; // РєРѕР»РёС‡РµСЃС‚РІРѕ Р·РЅР°РєРѕРІ РїРѕСЃР»Рµ Р·Р°РїСЏС‚РѕР№ (С‡С‚РѕР±С‹ РЅРµ РїРёСЃР°С‚СЊ 10^18, РєРѕРіРґР° РјС‹ РІС‹РїСѓСЃРєР°РµРј Р»РёС€СЊ РѕРґРёРЅ С‚РѕРєРµРЅ)
+
+    constructor() public { // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+
     }
-    
-    function transfer(address _to, uint256 _value) public returns(bool success){ // Передача токенов от пользователя, вызвавшего контракт к другому пользователю (_to) в количестве _value
+
+    function transfer(address _to, uint256 _value) public returns(bool success){ // РџРµСЂРµРґР°С‡Р° С‚РѕРєРµРЅРѕРІ РѕС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, РІС‹Р·РІР°РІС€РµРіРѕ РєРѕРЅС‚СЂР°РєС‚ Рє РґСЂСѓРіРѕРјСѓ РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ (_to) РІ РєРѕР»РёС‡РµСЃС‚РІРµ _value
         if(balances[msg.sender] >= _value && balances[_to] + _value >= balances[_to]){
             balances[msg.sender] -= _value;
             balances[_to] += _value;
@@ -39,34 +39,34 @@ contract AplexCoin is Ownable { // Код контракта (класса) владения монетами поль
         }
         return false;
     }
-    
-    function transferFrom(address _from, address _to, uint _value) public returns (bool success) { // Передача токенов от _from к _to в количестве _value
+
+    function transferFrom(address _from, address _to, uint _value) public returns (bool success) { // РџРµСЂРµРґР°С‡Р° С‚РѕРєРµРЅРѕРІ РѕС‚ _from Рє _to РІ РєРѕР»РёС‡РµСЃС‚РІРµ _value
         if(balances[_from] >= _value && balances[_to] + _value >= balances[_to]) {
             balances[_from] -= _value; 
             balances[_to] += _value;
-            return true;
+        return true;
         } 
         return false;
     }
-   
-    function balanceOf(address _owner) public view returns (uint256 balance){ // Узнаем баланс пользователя по его адресу
+
+    function balanceOf(address _owner) public view returns (uint256 balance){ // РЈР·РЅР°РµРј Р±Р°Р»Р°РЅСЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РїРѕ РµРіРѕ Р°РґСЂРµСЃСѓ
         return balances[_owner];
     }
-   
-    function mint(address _to, uint256 _value) public onlyOwner { // Чеканка новых токенов
+
+    function mint(address _to, uint256 _value) public onlyOwner { // Р§РµРєР°РЅРєР° РЅРѕРІС‹С… С‚РѕРєРµРЅРѕРІ
         assert(totalSupply + _value >= totalSupply && balances[_to] + _value >= balances[_to]);
         totalSupply += _value;
         balances[_to] += _value;
     }
-   
-    function () public payable { // Внесение денег в нашу систему (fallback функция)
+
+    function () public payable { // Р’РЅРµСЃРµРЅРёРµ РґРµРЅРµРі РІ РЅР°С€Сѓ СЃРёСЃС‚РµРјСѓ (fallback С„СѓРЅРєС†РёСЏ)
         uint256 tokensToMint;
         tokensToMint = msg.value;
         mint(msg.sender, tokensToMint);
     }
-    
-    function withDrawal() public { // Вывод средств с кошелька
-        owner.transfer(address(this).balance);
+
+    function withDrawal() public { // Р’С‹РІРѕРґ СЃСЂРµРґСЃС‚РІ СЃ РєРѕС€РµР»СЊРєР°
+    owner.transfer(address(this).balance);
     }
-   
+
 }
